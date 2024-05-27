@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Example</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dropdown-container">
+    <label for="institution-type">Type of Institution:</label>
+    <select id="institution-type">
+      <option value="">Select Type</option>
+      <option value="university">University</option>
+      <option value="college">College</option>
+      <option value="school">School</option>
+    </select>
+  </div>
+
+  <div class="dropdown-container">
+    <label for="institution-name">Institution Name:</label>
+    <select id="institution-name" disabled>
+      <option value="">Select Institution</option>
+    </select>
+  </div>
+
+  <div class="dropdown-container">
+    <label for="department">Department:</label>
+    <select id="department" disabled>
+      <option value="">Select Department</option>
+    </select>
+  </div>
+
+  <div id="policy-card-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
