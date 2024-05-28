@@ -8,7 +8,7 @@ const institutions = {
   const departments = {
     'AUCA': ['INFORMATION TECHNOLOGY', 'FINANCE', 'HR','LECTURES'],
     'UOK': ['BUSSINES', 'ACCOUNTANCE', 'INFORMATION'],
-    'Stanford University': ['Computer Science', 'Mechanical Engineering', 'Chemistry'],
+    'UTB': ['Computer Science', 'Mechanical Engineering', 'Chemistry'],
     'Amherst College': ['English', 'History', 'Economics'],
     'Williams College': ['Psychology', 'Sociology', 'Art History'],
     'Swarthmore College': ['Political Science', 'Philosophy', 'Theater'],
@@ -88,3 +88,23 @@ const institutions = {
       policyCardContainer.innerHTML = '';
     }
   }
+  function ratePolicy(evt) {
+    const stars = evt.target.closest('.star-rating').getElementsByClassName('star');
+    const rating = Array.from(stars).reverse().findIndex(star => star === evt.target) + 1;
+  
+    Array.from(stars).forEach((star, index) => {
+      if (index < rating) {
+        star.style.color = '#FFD700';
+      } else {
+        star.style.color = '#ccc';
+      }
+    });
+  
+    // You can store or send the rating value to the server here
+    console.log(`Policy rated: ${rating} stars`);
+  }
+  
+  const starRatings = document.querySelectorAll('.star-rating');
+  starRatings.forEach(rating => {
+    rating.addEventListener('click', ratePolicy);
+  });
