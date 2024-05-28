@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification</title>
+  <link rel="stylesheet" href="registration.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    .otp-input {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .otp-input input {
+      width: 3rem;
+      height: 3rem;
+      margin: 0 0.5rem;
+      text-align: center;
+      font-size: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 0.25rem;
+    }
+
+    .otp-input input:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+  </style>
+</head>
+<body>
+    <form action="">
+  <div class="container">
+    <div class="form-wrapper">
+      <h2>OTP Verification</h2>
+      <p class="subtitle">Enter the 5-digit OTP sent to your registered email</p>
+      <div class="otp-input">
+        <input type="text" maxlength="1" id="otp1" required>
+        <input type="text" maxlength="1" id="otp2" required>
+        <input type="text" maxlength="1" id="otp3" required>
+        <input type="text" maxlength="1" id="otp4" required>
+        <input type="text" maxlength="1" id="otp5" required>
+      </div>
+      <button type="button" class="btn-primary" onclick="verifyOTP()">Verify OTP</button>
+    </div>
+  </div>
+
+  <script>
+    function verifyOTP() {
+      const otp1 = document.getElementById('otp1').value;
+      const otp2 = document.getElementById('otp2').value;
+      const otp3 = document.getElementById('otp3').value;
+      const otp4 = document.getElementById('otp4').value;
+      const otp5 = document.getElementById('otp5').value;
+
+      const enteredOTP = otp1 + otp2 + otp3 + otp4 + otp5;
+
+      // Replace "12345" with the correct OTP value
+      const correctOTP = "12345";
+
+      if (enteredOTP === correctOTP) {
+        alert("OTP verified successfully!");
+        // Redirect or perform any other action after successful verification
+      } else {
+        alert("Invalid OTP. Please try again.");
+      }
+    }
+  </script>
+</form>
+</body>
+</html>

@@ -1,20 +1,20 @@
 // Dummy data for institutions and departments
 const institutions = {
-    university: ['Harvard University', 'MIT', 'Stanford University'],
-    college: ['Amherst College', 'Williams College', 'Swarthmore College'],
-    school: ['Stuyvesant High School', 'Bronx High School of Science', 'Brooklyn Technical High School']
+    PRIVATE: ['AUCA', 'UOK', 'UTB'],
+    PUBLIC: ['BK', 'RRA', 'RDB'],
+    // school: ['Stuyvesant High School', 'Bronx High School of Science', 'Brooklyn Technical High School']
   };
   
   const departments = {
-    'Harvard University': ['Computer Science', 'Mathematics', 'Biology'],
-    'MIT': ['Electrical Engineering', 'Aerospace Engineering', 'Physics'],
+    'AUCA': ['INFORMATION TECHNOLOGY', 'FINANCE', 'HR','LECTURES'],
+    'UOK': ['BUSSINES', 'ACCOUNTANCE', 'INFORMATION'],
     'Stanford University': ['Computer Science', 'Mechanical Engineering', 'Chemistry'],
     'Amherst College': ['English', 'History', 'Economics'],
     'Williams College': ['Psychology', 'Sociology', 'Art History'],
     'Swarthmore College': ['Political Science', 'Philosophy', 'Theater'],
     'Stuyvesant High School': ['Mathematics', 'Science', 'English'],
     'Bronx High School of Science': ['Computer Science', 'Biology', 'Chemistry'],
-    'Brooklyn Technical High School': ['Engineering', 'Architecture', 'Design']
+    'BK': ['Engineering', 'Architecture', 'Design']
   };
   
   // Get references to the dropdown elements
