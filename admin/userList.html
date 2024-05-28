@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Page</title>
+</head>
+<body>
+  <div id="dashboard-component"></div>
+
+  <script>
+    async function fetchAndRenderComponent() {
+      try {
+        const response = await fetch('dashboard-component/index.html');
+        const html = await response.text();
+        document.getElementById('dashboard-component').innerHTML = html;
+
+        // Load CSS and JavaScript files
+        const cssLink = document.createElement('link');
+        cssLink.rel = 'stylesheet';
+        cssLink.href = 'dashboard-component/styles.css';
+        document.head.appendChild(cssLink);
+
+        const scriptTag = document.createElement('script');
+        scriptTag.src = 'dashboard-component/script.js';
+        document.body.appendChild(scriptTag);
+      } catch (error) {
+        console.error('Error fetching component:', error);
+      }
+    }
+
+    fetchAndRenderComponent();
+  </script>
+</body>
+</html>
