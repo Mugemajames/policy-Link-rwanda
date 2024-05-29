@@ -28,7 +28,7 @@ async function fetchUsers() {
       emailCell.textContent = user.email;
   
       row.appendChild(nameCell);
-      row.appendChild(emailCell);
+    //   row.appendChild(emailCell);
       row.appendChild(phoneCell);
       row.appendChild(roleCell);
       row.appendChild(usernameCell);
