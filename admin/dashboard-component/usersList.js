@@ -21,17 +21,19 @@ async function fetchUsers() {
       const roleCell = document.createElement('td');
       const phoneCell = document.createElement('td');
       const usernameCell = document.createElement('td');
-    //   const lastnameCell = document.createElement('td');
-    //   const usernameCell = document.createElement('td');
   
       nameCell.textContent = `${user.firstname} ${user.lastname}`;
       emailCell.textContent = user.email;
+      roleCell.textContent = user.role;
+      phoneCell.textContent = user.phone;
+      usernameCell.textContent = user.username;
   
       row.appendChild(nameCell);
-    //   row.appendChild(emailCell);
+      row.appendChild(emailCell);
       row.appendChild(phoneCell);
       row.appendChild(roleCell);
       row.appendChild(usernameCell);
+  
       tableBody.appendChild(row);
     });
   
