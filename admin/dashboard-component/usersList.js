@@ -41,7 +41,6 @@ function createUserRow(user) {
   infoDiv.classList.add('candidate-list-info');
   const titleDiv = document.createElement('div');
   titleDiv.classList.add('candidate-list-title');
-  
 
   const idCell = document.createElement('td');
   idCell.classList.add('text-center');
