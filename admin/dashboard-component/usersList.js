@@ -72,6 +72,18 @@ async function fetchUsers() {
       const roleSpan = document.createElement('span');
       roleSpan.classList.add('candidate-list-time', 'order-1');
       roleSpan.textContent = user.role;
+
+      const emailSpan = document.createElement('span');
+      emailSpan.classList.add('candidate-list-time', 'order-1');
+      emailSpan.textContent = user.email;
+
+
+      const phoneSpan = document.createElement('span');
+      phoneSpan.classList.add('candidate-list-time', 'order-1');
+      phoneSpan.textContent = user.phone;
+
+
+
   
       roleCell.appendChild(roleSpan);
   
