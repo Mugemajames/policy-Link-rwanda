@@ -36,7 +36,7 @@ async function fetchUsers() {
   
       const nameLink = document.createElement('a');
       nameLink.href = '#';
-      nameLink.textContent = `${user.first_name} ${user.last_name}`;
+      nameLink.textContent = `${user.firstname} ${user.lastname}`;
   
       const h5 = document.createElement('h5');
       h5.classList.add('mb-0');
@@ -52,10 +52,10 @@ async function fetchUsers() {
       optionUl.classList.add('list-unstyled');
   
       const departmentLi = document.createElement('li');
-      departmentLi.innerHTML = `<i class="fas fa-filter pr-1"></i>${user.department}`;
+      departmentLi.innerHTML = `${user.username}`;
   
       const locationLi = document.createElement('li');
-      locationLi.innerHTML = `<i class="fas fa-map-marker-alt pr-1"></i>${user.location}`;
+      locationLi.innerHTML = `<i class="fas fa-map-marker-alt pr-1"></i>${user.email}`;
   
       optionUl.appendChild(departmentLi);
       optionUl.appendChild(locationLi);
