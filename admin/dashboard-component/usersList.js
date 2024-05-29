@@ -78,14 +78,28 @@ async function fetchUsers() {
       emailSpan.textContent = user.email;
 
 
+      const idSpan = document.createElement('span');
+      idSpan.classList.add('candidate-list-time', 'order-1');
+      idSpan.textContent = user.id;
+
+
       const phoneSpan = document.createElement('span');
       phoneSpan.classList.add('candidate-list-time', 'order-1');
       phoneSpan.textContent = user.phone;
 
+      const userNameSpan = document.createElement('span');
+      userNameSpan.classList.add('candidate-list-time', 'order-1');
+      userNameSpan.textContent = user.username;
+
 
 
   
+      roleCell.appendChild(idSpan);
       roleCell.appendChild(roleSpan);
+      roleCell.appendChild(emailSpan);
+      roleCell.appendChild(phoneSpan);
+      roleCell.appendChild(userNameSpan);
+
   
       const actionCell = document.createElement('td');
   
