@@ -22,7 +22,7 @@ signUpForm.addEventListener('submit', async (e) => {
 
     if (response.ok) {
       console.log('User registered successfully');
-      window.location.href = '/LoginForm';
+      window.location.href = 'password.html';
     } else {
       console.error('Failed to register user');
     }
