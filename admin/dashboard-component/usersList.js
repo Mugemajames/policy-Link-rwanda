@@ -18,12 +18,20 @@ async function fetchUsers() {
       const row = document.createElement('tr');
       const nameCell = document.createElement('td');
       const emailCell = document.createElement('td');
+      const roleCell = document.createElement('td');
+      const phoneCell = document.createElement('td');
+      const usernameCell = document.createElement('td');
+    //   const lastnameCell = document.createElement('td');
+    //   const usernameCell = document.createElement('td');
   
       nameCell.textContent = `${user.firstname} ${user.lastname}`;
       emailCell.textContent = user.email;
   
       row.appendChild(nameCell);
       row.appendChild(emailCell);
+      row.appendChild(phoneCell);
+      row.appendChild(roleCell);
+      row.appendChild(usernameCell);
       tableBody.appendChild(row);
     });
   
