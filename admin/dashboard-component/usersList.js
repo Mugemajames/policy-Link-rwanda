@@ -42,8 +42,8 @@ function createUserRow(user) {
   const titleDiv = document.createElement('div');
   titleDiv.classList.add('candidate-list-title');
   const nameLink = document.createElement('a');
-  nameLink.href = '#';
-  nameLink.textContent = `${user.firstname} ${user.lastname}`;
+  // nameLink.href = '#';
+  // nameLink.textContent = `${user.firstname} ${user.lastname}`;
   const h5 = document.createElement('h5');
   h5.classList.add('mb-0');
   h5.appendChild(nameLink);
