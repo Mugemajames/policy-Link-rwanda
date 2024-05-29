@@ -5,12 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User List</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
-     
-    <!----===== Iconscout CSS ===== -->
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Add your existing CSS styles here */
+  </style>
 </head>
 <body>
   <div class="container mt-3 mb-4">
@@ -21,20 +18,17 @@
             <table class="table manage-candidates-top mb-0">
               <thead>
                 <tr>
-                  <th>Users Profile</th>
-                  <th class="text-center">Id</th>
-                  <th class="text-center">First Name</th>
-                  <th class="text-center">Last Name</th>
-                  <th class="text-center">Email</th>
-                  <th class="text-center">User Name</th>
-                  <th class="text-center">Phone</th>
-                  <th class="text-center">Role</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Role</th>
+                  <th>Username</th>
                   <th class="action text-right">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <div id="table-container">
                 <!-- User data will be rendered here -->
-              </tbody>
+              </div>
             </table>
           </div>
         </div>
@@ -65,6 +59,6 @@
     </div>
   </div>
 
-  <script src="usersList.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
