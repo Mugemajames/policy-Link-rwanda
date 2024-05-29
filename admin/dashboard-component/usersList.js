@@ -68,6 +68,12 @@ async function fetchUsers() {
   
       const roleCell = document.createElement('td');
       roleCell.classList.add('candidate-list-favourite-time', 'text-center');
+
+      const phoneCell = document.createElement('td');
+      roleCell.classList.add('candidate-list-favourite-time', 'text-center');
+
+      const emailCell = document.createElement('td');
+      roleCell.classList.add('candidate-list-favourite-time', 'text-center');
   
       const roleSpan = document.createElement('span');
       roleSpan.classList.add('candidate-list-time', 'order-1');
@@ -94,11 +100,11 @@ async function fetchUsers() {
 
 
   
-      roleCell.appendChild(idSpan);
+    //   roleCell.appendChild(idSpan);
       roleCell.appendChild(roleSpan);
-      roleCell.appendChild(emailSpan);
-      roleCell.appendChild(phoneSpan);
-      roleCell.appendChild(userNameSpan);
+      emailCell.appendChild(emailSpan);
+      phoneCell.appendChild(phoneSpan);
+    //   roleCell.appendChild(userNameSpan);
 
   
       const actionCell = document.createElement('td');
@@ -149,6 +155,7 @@ async function fetchUsers() {
   
       row.appendChild(titleCell);
       row.appendChild(roleCell);
+      row.appendChild(emailCell);
       row.appendChild(actionCell);
   
       tableBody.appendChild(row);
