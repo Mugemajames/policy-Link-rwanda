@@ -23,10 +23,10 @@ async function fetchUsers() {
       const usernameCell = document.createElement('td');
   
       nameCell.textContent = `${user.firstname} ${user.lastname}`;
-      emailCell.textContent = user.email;
-      roleCell.textContent = user.role;
-      phoneCell.textContent = user.phone;
-      usernameCell.textContent = user.username;
+      emailCell.textContent = `${user.email}`;
+      roleCell.textContent = `${user.role}`;
+      phoneCell.textContent = `${user.phone}`;
+      usernameCell.textContent = `${user.username}`;
   
       row.appendChild(nameCell);
       row.appendChild(emailCell);
