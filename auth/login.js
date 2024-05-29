@@ -19,7 +19,7 @@ loginForm.addEventListener('submit', async (e) => {
 
     if (response.ok) {
       console.log('User logged in successfully');
-      window.location.href = '/Otp.html';
+      window.location.href = 'Otp.html';
     } else {
       // Log the response status and text to get more details about the error
       const errorData = await response.json();
