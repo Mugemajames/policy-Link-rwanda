@@ -7,7 +7,7 @@ signUpForm.addEventListener('submit', async (e) => {
     firstname: document.getElementById('firstname').value,
     lastname: document.getElementById('lastname').value,
     email: document.getElementById('email').value,
-    mobileNumber: document.getElementById('mobileNumber').value,
+    phone: document.getElementById('phone').value,
     username: document.getElementById('username').value
   };
 
