@@ -1,50 +1,86 @@
-.dropdown-container {
-    margin-bottom: 20px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  select {
-    padding: 5px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  select:disabled {
-    background-color: #f2f2f2;
-    color: #999;
-    cursor: not-allowed;
-  }
-  .policy-card {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-left: 40%;
-    height: 400px;
-    margin-top: 3px;
-  }
-  .star-rating {
-    unicode-bidi: bidi-override;
-    direction: rtl;
-    font-size: 24px;
-    color: #ccc;
-  }
-  
-  .star-rating > .star {
-    display: inline-block;
-    cursor: pointer;
-  }
-  
-  .star-rating > .star:hover:before,
-  .star-rating > .star:hover ~ .star:before {
-    content: "\2605";
-    color: #FFD700;
-  }
-  
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.select-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.select-block {
+  margin: 0 10px;
+}
+
+.select-input {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.policy {
+  width: 60%;
+  height: 100%;
+}
+
+.policy-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.institution-info {
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.star-icons {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.star-icons svg {
+  margin-right: 5px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #ccc;
+}
   

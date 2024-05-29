@@ -11,7 +11,7 @@
   <nav>
     <div class="logo">
       <a href="/">
-        <img src="policy\logo.png" alt="Logo" class="logo-img">
+        <img src="policy\log.png" alt="Logo" class="logo-img">
       </a>
     </div>
     <ul class="nav-links">
@@ -41,46 +41,32 @@
       <!-- <a href="/register">Register</a> -->
     </div>
   </nav>
-<div class="container">
-  <div class="container-wrapper">
-  <div class="dropdown-container">
-    <label for="institution-type">Type of Institution:</label>
-    <select id="institution-type">
-      <option value="">Select Type</option>
-      <option value="PRIVATE">PRIVATE</option>
-      <option value="PUBLIC">PUBLIC</option>
-      <!-- <option value="school">School</option> -->
-    </select>
-  </div>
+  <div class="container">
+    <h1>Institutions and Policies</h1>
 
-  <div class="dropdown-container">
-    <label for="institution-name">Institution Name:</label>
-    <select id="institution-name" disabled>
-      <option value="">Select Institution</option>
-    </select>
-  </div>
+    <div class="select-wrapper">
+      <div class="select-block">
+        <label for="institution-select">Select Institution:</label>
+        <select id="institution-select" class="select-input" onchange="handleInstitutionChange()"></select>
+      </div>
 
-  <div class="dropdown-container">
-    <label for="department">Department:</label>
-    <select id="department" disabled>
-      <option value="">Select Department</option>
-    </select>
-  </div>
-</div>
-
-  <div id="policy-card-container">
-    <div class="star-rating">
-      <span class="star">&#9733;</span>
-      <span class="star">&#9733;</span>
-      <span class="star">&#9733;</span>
-      <span class="star">&#9733;</span>
-      <span class="star">&#9733;</span>
+      <div class="select-block">
+        <label for="department-select">Select Department:</label>
+        <select id="department-select" class="select-input" onchange="handleDepartmentChange()"></select>
+      </div>
     </div>
 
+    <div class="content">
+      <div class="policy">
+        <h2>Policies</h2>
+        <div id="policy-list"></div>
+      </div>
+    </div>
 
+    <ul class="pagination" id="pagination"></ul>
   </div>
-</div>
-</div>
+
+  <script src="app.js"></script>
 
   <script src="script.js"></script>
 </body>

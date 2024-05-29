@@ -3,44 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Navigation</title>
-  <link rel="stylesheet" href="policy.css">
+  <title>Institutions and Policies</title>
+  <style>
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .select-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .select-block {
+      margin: 0 10px;
+    }
+
+    .select-input {
+      width: 200px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .policy {
+      width: 60%;
+      height: 100%;
+    }
+
+    .policy-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      border-style: solid;
+      border-width: 1px;
+    }
+
+    .institution-info {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .star-icons {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .star-icons svg {
+      margin-right: 5px;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+    }
+
+    .pagination li {
+      margin: 0 5px;
+    }
+
+    .pagination button {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .pagination button.active {
+      background-color: #ccc;
+    }
+  </style>
 </head>
 <body>
-  <nav>
-    <div class="logo">
-      <a href="./">
-        <img src="logo.png" alt="Logo" class="logo-img">
-      </a>
-    </div>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li>
-        <span class="dropdown-toggle">Institution Type</span>
-        <div class="dropdown-menu">
-          <ul>
-            <li><a href="/policy/public_inst">Public</a></li>
-            <li><a href="/policy/private_inst">Private</a></li>
-          </ul>
-        </div>
-      </li>
-      <li><a href="/about">About</a></li>
-    </ul>
-    <div class="user-section">
-      <img src="profile.jpg" alt="Profile" class="profile-picture">
-      <div class="dropdown-menu">
-        <ul>
-          <li><a href="/profile">Profile</a></li>
-          <li><a href="/policy/auth/loginForm">Logout</a></li>
-        </ul>
+  <div class="container">
+    <h1>Institutions and Policies</h1>
+
+    <div class="select-wrapper">
+      <div class="select-block">
+        <label for="institution-select">Select Institution:</label>
+        <select id="institution-select" class="select-input" onchange="handleInstitutionChange()"></select>
+      </div>
+
+      <div class="select-block">
+        <label for="department-select">Select Department:</label>
+        <select id="department-select" class="select-input" onchange="handleDepartmentChange()"></select>
       </div>
     </div>
-    <div class="auth-buttons">
-      <a href="/LoginForm">Login</a>
-      <a href="/register">Register</a>
-    </div>
-  </nav>
 
-  <script src="script.js"></script>
+    <div class="content">
+      <div class="policy">
+        <h2>Policies</h2>
+        <div id="policy-list"></div>
+      </div>
+    </div>
+
+    <ul class="pagination" id="pagination"></ul>
+  </div>
+
+  <script src="policy.js"></script>
 </body>
 </html>
