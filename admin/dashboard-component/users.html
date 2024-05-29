@@ -116,10 +116,10 @@ async function fetchUsers() {
       optionUl.classList.add('list-unstyled');
   
       const departmentLi = document.createElement('li');
-      departmentLi.innerHTML = `<i class="fas fa-filter pr-1"></i>${user.department}`;
+      departmentLi.innerHTML = `<i class="fas fa-filter pr-1"></i>${user.phone}`;
   
       const locationLi = document.createElement('li');
-      locationLi.innerHTML = `<i class="fas fa-map-marker-alt pr-1"></i>${user.location}`;
+      locationLi.innerHTML = `<i class="fas fa-map-marker-alt pr-1"></i>${user.username}`;
   
       optionUl.appendChild(departmentLi);
       optionUl.appendChild(locationLi);
