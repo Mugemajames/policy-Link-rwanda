@@ -1,7 +1,7 @@
 // Function to fetch users from the API
 async function fetchUsers() {
     try {
-      const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/account/view_all_users/');
+      const response = await fetch('https://example.com/users');
       const users = await response.json();
       return users;
     } catch (error) {
@@ -18,22 +18,12 @@ async function fetchUsers() {
       const row = document.createElement('tr');
       const nameCell = document.createElement('td');
       const emailCell = document.createElement('td');
-      const roleCell = document.createElement('td');
-      const phoneCell = document.createElement('td');
-      const usernameCell = document.createElement('td');
   
       nameCell.textContent = `${user.firstname} ${user.lastname}`;
-      emailCell.textContent = `${user.email}`;
-      roleCell.textContent = `${user.role}`;
-      phoneCell.textContent = `${user.phone}`;
-      usernameCell.textContent = `${user.username}`;
+      emailCell.textContent = user.email;
   
       row.appendChild(nameCell);
       row.appendChild(emailCell);
-      row.appendChild(phoneCell);
-      row.appendChild(roleCell);
-      row.appendChild(usernameCell);
-  
       tableBody.appendChild(row);
     });
   
