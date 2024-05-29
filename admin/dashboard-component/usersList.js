@@ -13,6 +13,22 @@ async function fetchUsers() {
   }
 }
 
+// Function to delete a user
+async function deleteUser(userId) {
+  try {
+    const response = await fetch(`https://policy-link-rwanda-client-project-with.onrender.com/account/delete_user/${userId}/`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return true;
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    return false;
+  }
+}
+
 // Function to create a table row for a user
 function createUserRow(user) {
   const row = document.createElement('tr');
@@ -68,8 +84,8 @@ function createUserRow(user) {
   actionCell.classList.add('action', 'text-right');
   const actionUl = document.createElement('ul');
   actionUl.classList.add('list-unstyled', 'mb-0', 'd-flex', 'justify-content-end');
-  
-  const createActionItem = (className, title, iconClass) => {
+
+  const createActionItem = (className, title, iconClass, clickHandler) => {
     const li = document.createElement('li');
     const link = document.createElement('a');
     link.href = '#';
@@ -79,13 +95,31 @@ function createUserRow(user) {
     const icon = document.createElement('i');
     icon.classList.add(...iconClass.split(' '));
     link.appendChild(icon);
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      clickHandler();
+    });
     li.appendChild(link);
     return li;
   };
 
-  actionUl.appendChild(createActionItem('text-primary', 'View', 'far fa-eye'));
-  actionUl.appendChild(createActionItem('text-info', 'Edit', 'fas fa-pencil-alt'));
-  actionUl.appendChild(createActionItem('text-danger', 'Delete', 'far fa-trash-alt'));
+  actionUl.appendChild(createActionItem('text-primary', 'View', 'far fa-eye', () => {
+    // View action handler
+  }));
+  actionUl.appendChild(createActionItem('text-info', 'Edit', 'fas fa-pencil-alt', () => {
+    // Edit action handler
+  }));
+  actionUl.appendChild(createActionItem('text-danger', 'Delete', 'far fa-trash-alt', async () => {
+    const confirmed = confirm(`Are you sure you want to delete ${user.firstname} ${user.lastname}?`);
+    if (confirmed) {
+      const success = await deleteUser(user.id);
+      if (success) {
+        row.remove();
+      } else {
+        alert('Failed to delete user. Please try again.');
+      }
+    }
+  }));
   actionCell.appendChild(actionUl);
 
   row.appendChild(titleCell);
