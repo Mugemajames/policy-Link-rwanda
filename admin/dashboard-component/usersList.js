@@ -2,10 +2,14 @@
 async function fetchUsers() {
   try {
     const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/account/view_all_users/');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
     const users = await response.json();
     return users;
   } catch (error) {
     console.error('Error fetching users:', error);
+    return []; // Return an empty array on error
   }
 }
 
@@ -64,41 +68,24 @@ function createUserRow(user) {
   actionCell.classList.add('action', 'text-right');
   const actionUl = document.createElement('ul');
   actionUl.classList.add('list-unstyled', 'mb-0', 'd-flex', 'justify-content-end');
-  const viewLi = document.createElement('li');
-  const viewLink = document.createElement('a');
-  viewLink.href = '#';
-  viewLink.classList.add('text-primary');
-  viewLink.setAttribute('data-toggle', 'tooltip');
-  viewLink.setAttribute('title', 'view');
-  const viewIcon = document.createElement('i');
-  viewIcon.classList.add('far', 'fa-eye');
-  viewLink.appendChild(viewIcon);
-  viewLi.appendChild(viewLink);
-  const editLi = document.createElement('li');
-  const editLink = document.createElement('a');
-  editLink.href = '#';
-  editLink.classList.add('text-info');
-  editLink.setAttribute('data-toggle', 'tooltip');
-  editLink.setAttribute('title', 'Edit');
-  editLink.setAttribute('data-toggle', 'modal');
-  editLink.setAttribute('data-target', '#profileModal');
-  const editIcon = document.createElement('i');
-  editIcon.classList.add('fas', 'fa-pencil-alt');
-  editLink.appendChild(editIcon);
-  editLi.appendChild(editLink);
-  const deleteLi = document.createElement('li');
-  const deleteLink = document.createElement('a');
-  deleteLink.href = '#';
-  deleteLink.classList.add('text-danger');
-  deleteLink.setAttribute('data-toggle', 'tooltip');
-  deleteLink.setAttribute('title', 'Delete');
-  const deleteIcon = document.createElement('i');
-  deleteIcon.classList.add('far', 'fa-trash-alt');
-  deleteLink.appendChild(deleteIcon);
-  deleteLi.appendChild(deleteLink);
-  actionUl.appendChild(viewLi);
-  actionUl.appendChild(editLi);
-  actionUl.appendChild(deleteLi);
+  
+  const createActionItem = (className, title, iconClass) => {
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = '#';
+    link.classList.add(className);
+    link.setAttribute('data-toggle', 'tooltip');
+    link.setAttribute('title', title);
+    const icon = document.createElement('i');
+    icon.classList.add(...iconClass.split(' '));
+    link.appendChild(icon);
+    li.appendChild(link);
+    return li;
+  };
+
+  actionUl.appendChild(createActionItem('text-primary', 'View', 'far fa-eye'));
+  actionUl.appendChild(createActionItem('text-info', 'Edit', 'fas fa-pencil-alt'));
+  actionUl.appendChild(createActionItem('text-danger', 'Delete', 'far fa-trash-alt'));
   actionCell.appendChild(actionUl);
 
   row.appendChild(titleCell);
@@ -126,4 +113,5 @@ async function renderUserData() {
   });
 }
 
-renderUserData();
+// Ensure DOM is loaded before running script
+document.addEventListener('DOMContentLoaded', renderUserData);
