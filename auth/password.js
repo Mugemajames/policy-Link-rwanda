@@ -6,7 +6,7 @@ passwordForm.addEventListener('submit', async (e) => {
   const password = document.getElementById('password').value;
 
   try {
-    const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/account/password_validation/', {
+    const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/account/password_validation', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
