@@ -87,11 +87,11 @@
             <div class="candidate-list-details">
               <div class="candidate-list-info">
                 <div class="candidate-list-title">
-                  <h5 class="mb-0"><a href="#">${department.name}</a></h5>
+                  <h5 class="mb-0"><a href="#">${department.id}</a></h5>
                 </div>
                 <div class="candidate-list-option">
                   <ul class="list-unstyled">
-                    <li><i class="fas fa-filter pr-1"></i>${department.field}</li>
+                    <li><i class="fas fa-filter pr-1"></i>${department.name}</li>
                     <li><i class="fas fa-map-marker-alt pr-1"></i>${department.location}</li>
                   </ul>
                 </div>
@@ -100,7 +100,7 @@
           </td>
           <td class="candidate-list-favourite-time text-center">
             <a class="candidate-list-favourite order-2 text-danger" href="#"><i class="fas fa-heart"></i></a>
-            <span class="candidate-list-time order-1">${department.status}</span>
+            <span class="candidate-list-time order-1">${department.name}</span>
           </td>
           <td>
             <ul class="list-unstyled mb-0 d-flex justify-content-end">
