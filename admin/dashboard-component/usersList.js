@@ -6,6 +6,7 @@ async function fetchUsers() {
       throw new Error('Network response was not ok');
     }
     const users = await response.json();
+    console.log('Fetched users:', users); // Debugging line
     return users;
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -22,6 +23,7 @@ async function deleteUser(userId) {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
+    console.log('User deleted:', userId); // Debugging line
     return true;
   } catch (error) {
     console.error('Error deleting user:', error);
