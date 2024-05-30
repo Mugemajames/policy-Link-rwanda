@@ -12,9 +12,10 @@
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="userList.css">
 
     <title>Admin Dashboard Panel</title> 
-    
 </head>
 <body>
     <nav>
@@ -23,16 +24,16 @@
                 <img src="images/log.png" alt="">
             </div>
 
-            <span class="logo_name">Policy Link Rwanda</span>
+            <span class="logo_name">Rwanda Link Policy</span>
         </div>
 
         <div class="menu-items">
             <ul class="nav-links">
-                <li><a href="#">
+                <li><a href="index.html">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Dahsboard</span>
                 </a></li>
-                <li><a href="userList.html">
+                <li><a href="#">
                     <i class="uil uil-users-alt"></i>
                     <span class="link-name">Users</span>
                 </a>
@@ -51,10 +52,11 @@
                     <i class="uil uil-comments"></i>
                     <span class="link-name">Department</span>
                 </a></li>
+              
             </ul>
             
             <ul class="logout-mode">
-                <li><a href=".././index.html">
+                <li><a href="#">
                     <i class="uil uil-signout"></i>
                     <span class="link-name">Logout</span>
                 </a></li>
@@ -81,7 +83,8 @@
                 <i class="uil uil-search"></i>
                 <input type="text" placeholder="Search here...">
             </div>
-          <img src="images/profile.jpg" alt="" data-toggle="modal" data-target="#profileModal">
+          <!-- <img src="images/profile.jpg" alt="" data-toggle="modal" data-target="#profileModal"> -->
+          <h6  data-toggle="modal" data-target="#profileModal"></h6>
         </div>
         <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -118,7 +121,15 @@
                                         <div class="card-body">
                                             <div class="row mb-3">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Full Name</h6>
+                                                    <h6 class="mb-0">First Name</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <input type="text" class="form-control" value="John Doe">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Last Name</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
                                                     <input type="text" class="form-control" value="John Doe">
@@ -142,18 +153,18 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Mobile</h6>
+                                                    <h6 class="mb-0">Role</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" value="(320) 380-4539">
+                                                    <input type="text" class="form-control" value="Admin">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Username</h6>
+                                                    <h6 class="mb-0">User Name</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" value="Bay Area, San Francisco, CA">
+                                                    <input type="text" class="form-control" value="John Doe">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -172,125 +183,118 @@
                         </div>
                     </div>
                     <!-- Modal Footer -->
-                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
 
 
 
+        <div id="user-list-container">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<div class="container mt-3 mb-4">
+<div class="col-lg-9 mt-4 mt-lg-0">
+<div class="row">
+  <div class="col-md-12">
+    <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+        <div class="container mt-3">
+            <h3>Comment Reports</h3>
+            <table class="table manage-candidates-top mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">Comment</th>
+                        <th class="text-center">Reported By</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="comment-report-list"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+async function fetchCommentReports() {
+try {
+const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/institution/comment_reports/');
+const data = await response.json();
+return data.comment_reports || [];
+} catch (error) {
+console.error("Error fetching comment reports:", error);
+return [];
+}
+}
+
+function createCommentReportRow(commentReport) {
+return `
+<tr class="candidates-list">
+<td class="text-center">${commentReport.total_comments}</td>
+<td class="text-center">${commentReport.most_commented_institution}</td>
+<td class="text-center">${commentReport.most_commented_department}</td>
+<td class="text-center">
+    <ul class="list-unstyled mb-0 d-flex justify-content-center">
+        <li><a href="#" class="text-info" data-toggle="tooltip" title="View"><i class="far fa-eye"></i></a></li>
+        <li><a href="#" class="text-danger" data-toggle="tooltip" title="Delete"><i class="far fa-trash-alt"></i></a></li>
+    </ul>
+</td>
+</tr>
+`;
+}
+
+async function populateCommentReportList() {
+const commentReportList = document.getElementById('comment-report-list');
+const commentReports = await fetchCommentReports();
+
+if (!Array.isArray(commentReports)) {
+commentReportList.innerHTML = '<tr><td colspan="4">Invalid response format from API.</td></tr>';
+return;
+}
+
+if (commentReports.length === 0) {
+commentReportList.innerHTML = '<tr><td colspan="4">No comment reports found.</td></tr>';
+return;
+}
+
+commentReportList.innerHTML = commentReports.map(createCommentReportRow).join('');
+}
+
+// Initialize the comment report list on page load
+document.addEventListener('DOMContentLoaded', populateCommentReportList);
+</script>
+
+      <div class="text-center mt-3 mt-sm-3">
+        <ul class="pagination justify-content-center mb-0">
+          <li class="page-item disabled"> <span class="page-link">Prev</span> </li>
+          <li class="page-item active" aria-current="page"><span class="page-link">1 </span> <span class="sr-only">(current)</span></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">...</a></li>
+          <li class="page-item"><a class="page-link" href="#">25</a></li>
+          <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 
-
-
-
-
-        +++++++++++++
 
         <div class="dash-content">
-            <div class="overview">
-                <div class="title">
-                    <i class="uil uil-tachometer-fast-alt"></i>
-                    <span class="text">Dashboard</span>
-                </div>
-
-                <div class="boxes">
-                    <div class="box box1">
-                        <i class="uil uil-users-alt"></i>
-                        <span class="text">Total Users</span>
-                        <span class="number" id="totalUsers">Loading....</span>
-                    </div>
-
-                    <script>
-                        async function fetchTotalUsers() {
-                            try {
-                                const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/account/total_users/');
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                const data = await response.json();
-                                return data.total_users;
-                            } catch (error) {
-                                console.error('Error fetching total users:', error);
-                                return 'Error';
-                            }
-                        }
-                
-                        async function displayTotalUsers() {
-                            const totalUsersElement = document.getElementById('totalUsers');
-                            const totalUsers = await fetchTotalUsers();
-                            totalUsersElement.textContent = totalUsers;
-                        }
-                
-                        // Call the function to display total users when the page loads
-                        document.addEventListener('DOMContentLoaded', displayTotalUsers);
-                    </script>
-
-
-
-
-                    <div class="box box2">
-                        <i class="uil uil-users-alt"></i>
-                        <span class="text">Insititutions</span>
-                        <span class="number" id="totalInstitutions">Loading....</span>
-                    </div>
-                    <script>
-                        async function fetchTotalUsers() {
-                            try {
-                                const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/institution/total_institutions/');
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                const data = await response.json();
-                                return data.total_institutions;
-                            } catch (error) {
-                                console.error('Error fetching total users:', error);
-                                return 'Error';
-                            }
-                        }
-                
-                        async function displayTotalUsers() {
-                            const totalUsersElement = document.getElementById('totalInstitutions');
-                            const totalInstitutions= await fetchTotalUsers();
-                            totalUsersElement.textContent = totalInstitutions;
-                        }
-                
-                        // Call the function to display total users when the page loads
-                        document.addEventListener('DOMContentLoaded', displayTotalUsers);
-                    </script>
-                    
-
-
-
-
-
-                    <div class="box box3">
-                        <i class="uil uil-share"></i>
-                        <span class="text">Total Policy</span>
-                        <span class="number">10,120</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="activity">
-                <div class="title">
-                    <i class="uil uil-clock-three"></i>
-                    <span class="text">Recent Activity</span>
-                </div>
-
-                <div class="container">
-                    <h1>Policy Access Improvement</h1>
-                    <canvas id="policyChart"></canvas>
-                </div>
             
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script src="Chart.js"></script>
-            </div>
         </div>
     </section>
     
     <!-- The Modal -->
     
+
     <script src="script.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

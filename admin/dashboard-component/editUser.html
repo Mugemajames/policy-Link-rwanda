@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit User</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Include your CSS here */
+  </style>
+</head>
+<body>
+
+<!-- Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="main-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row mb-3">
+                    <div class="col-3">
+                      <h6 class="mb-0">First Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" id="editFirstName" class="form-control" value="">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3">
+                      <h6 class="mb-0">Last Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" id="editLastName" class="form-control" value="">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" id="editEmail" class="form-control" value="">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3">
+                      <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" id="editPhone" class="form-control" value="">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3">
+                      <h6 class="mb-0">Role</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" id="editRole" class="form-control" value="">
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3">
+                      <h6 class="mb-0">Username</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="text" id="editUsername" class="form-control" value="">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9 text-secondary">
+                      <input type="button" id="saveChangesBtn" class="btn btn-primary px-4" value="Save Changes">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="container mt-3 mb-4">
+  <div class="col-lg-9 mt-4 mt-lg-0">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
+          <table class="table manage-candidates-top mb-0">
+            <thead>
+              <tr>
+                <th>Users Profile</th>
+                <th class="text-center">Role</th>
+                <th class="action text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="user-list">
+              <!-- User data will be injected here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  async function fetchUsers() {
+    try {
+      const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/account/view_all_users/');
+      const users = await response.json();
+      return users;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      return [];
+    }
+  }
+
+  async function fetchUser(userId) {
+    try {
+      const response = await fetch(`https://policy-link-rwanda-client-project-with.onrender.com/account/user_edit/${userId}/`);
+      const user = await response.json();
+      return user;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      return null;
+    }
+  }
+
+  async function saveUser(userId) {
+    const updatedUser = {
+      firstname: document.getElementById('editFirstName').value,
+      lastname: document.getElementById('editLastName').value,
+      email: document.getElementById('editEmail').value,
+      phone: document.getElementById('editPhone').value,
+      role: document.getElementById('editRole').value,
+      username: document.getElementById('editUsername').value
+    };
+
+    try {
+      const response = await fetch(`https://policy-link-rwanda-client-project-with.onrender.com/account/user_edit/${userId}/`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedUser),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      alert('User details updated successfully');
+      $('#editUserModal').modal('hide');
+      populateUserList();
+    } catch (error) {
+      console.error("Error updating user:", error);
+      alert('Failed to update user details. Please try again.');
+    }
+  }
+
+  function openEditModal(userId) {
+    fetchUser(userId).then(user => {
+      if (user) {
+        document.getElementById('editFirstName').value = user.firstname;
+        document.getElementById('editLastName').value = user.lastname;
+        document.getElementById('editEmail').value = user.email;
+        document.getElementById('editPhone').value = user.phone;
+        document.getElementById('editRole').value = user.role;
+        document.getElementById('editUsername').value = user.username;
+
+        const saveChangesBtn = document.getElementById('saveChangesBtn');
+        saveChangesBtn.onclick = () => saveUser(user.id);
+
+        $('#editUserModal').modal('show');
+      }
+    });
+  }
+
+  async function deleteUser(userId) {
+    try {
+      const response = await fetch(`https://policy-link-rwanda-client-project-with.onrender.com/account/user_delete/${userId}/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      alert('User deleted successfully');
+      populateUserList();
+      return true;
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert('Failed to delete user. Please try again.');
+      return false;
+    }
+  }
+  
+  function confirmDelete(userId) {
+    if (confirm('Are you sure you want to delete this user?')) {
+      deleteUser(userId);
+    }
+  }
+
+  function createUserRow(user) {
+    return `
+      <tr class="candidates-list">
+        <td class="title">
+          <div class="candidate-list-details">
+            <div class="candidate-list-info">
+              <div class="candidate-list-title">
+                <h5 class="mb-0"><a href="#">${user.firstname} ${user.lastname}</a></h5>
+              </div>
+              <div class="candidate-list-option">
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-id-badge pr-1"></i>${user.username}</li>
+                  <li><i class="fas fa-envelope pr-1"></i>${user.email}</li>
+                  <li><i class="fas fa-phone pr-1"></i>${user.phone}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="candidate-list-favourite-time text-center">
+          <span class="candidate-list-time order-1">${user.role}</span>
+        </td>
+        <td>
+          <ul class="list-unstyled mb-0 d-flex justify-content-end">
+            <li><a href="#" class="text-primary" data-toggle="tooltip" title="View"><i class="far fa-eye"></i></a></li>
+            <li><a href="#" class="text-info" data-toggle="tooltip" title="Edit" onclick="openEditModal(${user.id})"><i class="fas fa-pencil-alt"></i></a></li>
+            <li><a href="#" class="text-danger" data-toggle="tooltip" title="Delete" onclick="confirmDelete(${user.id})"><i class="far fa-trash-alt"></i></a></li>
+          </ul>
+        </td>
+      </tr>
+    `;
+  }
+
+  async function populateUserList() {
+    const userList = document.getElementById('user-list');
+    const users = await fetchUsers();
+
+    if (users.length === 0) {
+      userList.innerHTML = '<tr><td colspan="3">No users found.</td></tr>';
+      return;
+    }
+
+    userList.innerHTML = users.map(createUserRow).join('');
+  }
+
+  // Initialize the user list on page load
+  document.addEventListener('DOMContentLoaded', populateUserList);
+</script>
+</body>
+</html>
