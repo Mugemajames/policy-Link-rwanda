@@ -50,118 +50,97 @@
 </head>
 <body>
 
-<div id="user-list-container">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-  <div class="container mt-3 mb-4">
-    <div class="col-lg-9 mt-4 mt-lg-0">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
-            <table class="table manage-candidates-top mb-0">
-              <thead>
-                <tr>
-                  <th>Users Profile</th>
-                  <th class="text-center">Role</th>
-                  <th class="action text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody id="user-list">
-                <!-- Data will be inserted here by JavaScript -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  async function fetchUsers() {
-    try {
-      const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/account/view_all_users/');
-      const users = await response.json();
-      return users;
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      return [];
-    }
-  }
-
-  async function deleteUser(userId) {
-    try {
-      const response = await fetch(`https://policy-link-rwanda-client-project-with.onrender.com/account/delete_user/${userId}/`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return true;
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      return false;
-    }
-  }
-
-  function createUserRow(user) {
-    return `
-      <tr class="candidates-list">
-        <td class="title">
-          <div class="candidate-list-details">
-            <div class="candidate-list-info">
-              <div class="candidate-list-title">
-                <h5 class="mb-0"><a href="#">${user.firstname} ${user.lastname}</a></h5>
-              </div>
-              <div class="candidate-list-option">
-                <ul class="list-unstyled">
-                  <li><i class="fas fa-id-badge pr-1"></i>ID: ${user.id}</li>
-                  <li><i class="fas fa-envelope pr-1"></i>Email: ${user.email}</li>
-                  <li><i class="fas fa-user pr-1"></i>Username: ${user.username}</li>
-                  <li><i class="fas fa-phone pr-1"></i>Phone: ${user.phone}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td class="candidate-list-favourite-time text-center">
-          <span class="candidate-list-time order-1">${user.role}</span>
-        </td>
-        <td class="text-right">
-          <ul class="list-unstyled mb-0 d-flex justify-content-end">
-            <li><a href="#" class="text-primary" data-toggle="tooltip" title="View"><i class="far fa-eye"></i></a></li>
-            <li><a href="#" class="text-info" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
-            <li><a href="#" class="text-danger" data-toggle="tooltip" title="Delete" onclick="confirmDelete(${user.id})"><i class="far fa-trash-alt"></i></a></li>
-          </ul>
-        </td>
+  <table class="table manage-candidates-top mb-0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Phone</th>
+        <th>Role</th>
+        <th class="text-right">Action</th>
       </tr>
-    `;
-  }
+    </thead>
+    <tbody id="user-list">
+      <!-- Data will be inserted here -->
+    </tbody>
+  </table>
 
-  async function populateUserList() {
-    const userList = document.getElementById('user-list');
-    const users = await fetchUsers();
-
-    if (users.length === 0) {
-      userList.innerHTML = '<tr><td colspan="3">No users found.</td></tr>';
-      return;
-    }
-
-    userList.innerHTML = users.map(createUserRow).join('');
-  }
-
-  async function confirmDelete(userId) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      const success = await deleteUser(userId);
-      if (success) {
-        populateUserList();
-      } else {
-        alert('Failed to delete user. Please try again.');
+  <script>
+    async function fetchUsers() {
+      try {
+        const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/account/view_all_users/');
+        const users = await response.json();
+        return users;
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        return [];
       }
     }
-  }
 
-  // Initialize the user list on page load
-  document.addEventListener('DOMContentLoaded', populateUserList);
-</script>
+    async function deleteUser(userId) {
+      try {
+        const response = await fetch(`https://policy-link-rwanda-client-project-with.onrender.com/account/delete_user/${userId}/`, {
+          method: 'DELETE',
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return true;
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        return false;
+      }
+    }
+
+    function createUserRow(user) {
+      return `
+        <tr class="candidates-list">
+          <td>${user.id}</td>
+          <td>${user.firstname}</td>
+          <td>${user.lastname}</td>
+          <td>${user.email}</td>
+          <td>${user.username}</td>
+          <td>${user.phone}</td>
+          <td>${user.role}</td>
+          <td>
+            <ul class="list-unstyled mb-0 d-flex justify-content-end">
+              <li><a href="#" class="text-primary" data-toggle="tooltip" title="View"><i class="far fa-eye"></i></a></li>
+              <li><a href="#" class="text-info" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
+              <li><a href="#" class="text-danger" data-toggle="tooltip" title="Delete" onclick="confirmDelete(${user.id})"><i class="far fa-trash-alt"></i></a></li>
+            </ul>
+          </td>
+        </tr>
+      `;
+    }
+
+    async function populateUserList() {
+      const userList = document.getElementById('user-list');
+      const users = await fetchUsers();
+
+      if (users.length === 0) {
+        userList.innerHTML = '<tr><td colspan="8">No users found.</td></tr>';
+        return;
+      }
+
+      userList.innerHTML = users.map(createUserRow).join('');
+    }
+
+    async function confirmDelete(userId) {
+      if (confirm('Are you sure you want to delete this user?')) {
+        const success = await deleteUser(userId);
+        if (success) {
+          populateUserList();
+        } else {
+          alert('Failed to delete user. Please try again.');
+        }
+      }
+    }
+
+    // Initialize the user list on page load
+    document.addEventListener('DOMContentLoaded', populateUserList);
+  </script>
 </body>
 </html>
