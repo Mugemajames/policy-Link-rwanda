@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Department List</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .table th, .table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    .table th {
+      background-color: #f2f2f2;
+      text-align: left;
+    }
+    .thumb img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .candidate-list-details {
+      margin-left: 10px;
+    }
+    .candidate-list-info {
+      display: flex;
+      align-items: center;
+    }
+    .candidate-list-title h5 {
+      margin: 0;
+    }
+    .list-unstyled {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .candidate-list-favourite-time .candidate-list-time {
+      display: block;
+    }
+    .d-flex {
+      display: flex;
+    }
+    .justify-content-end {
+      justify-content: flex-end;
+    }
+  </style>
+</head>
+<body>
+
+  <table class="table manage-candidates-top mb-0">
+    <thead>
+      <tr>
+        <th>Department Name</th>
+        <th class="text-center">Status</th>
+        <th class="action text-right">Action</th>
+      </tr>
+    </thead>
+    <tbody id="department-list">
+      <!-- Data will be inserted here -->
+    </tbody>
+  </table>
+
+  <script>
+    async function fetchDepartments() {
+      try {
+        const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/institution/view_all_departments/');
+        const departments = await response.json();
+        return departments;
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+        return [];
+      }
+    }
+
+    function createDepartmentRow(department) {
+      return `
+        <tr class="candidates-list">
+          <td class="title">
+            <div class="thumb">
+              <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+            </div>
+            <div class="candidate-list-details">
+              <div class="candidate-list-info">
+                <div class="candidate-list-title">
+                  <h5 class="mb-0"><a href="#">${department.name}</a></h5>
+                </div>
+                <div class="candidate-list-option">
+                  <ul class="list-unstyled">
+                    <li><i class="fas fa-filter pr-1"></i>${department.field}</li>
+                    <li><i class="fas fa-map-marker-alt pr-1"></i>${department.location}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="candidate-list-favourite-time text-center">
+            <a class="candidate-list-favourite order-2 text-danger" href="#"><i class="fas fa-heart"></i></a>
+            <span class="candidate-list-time order-1">${department.status}</span>
+          </td>
+          <td>
+            <ul class="list-unstyled mb-0 d-flex justify-content-end">
+              <li><a href="#" class="text-primary" data-toggle="tooltip" title="view"><i class="far fa-eye"></i></a></li>
+              <li><a href="#" class="text-info" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a></li>
+              <li><a href="#" class="text-danger" data-toggle="tooltip" title="Delete"><i class="far fa-trash-alt"></i></a></li>
+            </ul>
+          </td>
+        </tr>
+      `;
+    }
+
+    async function populateDepartmentList() {
+      const departmentList = document.getElementById('department-list');
+      const departments = await fetchDepartments();
+      
+      if (departments.length === 0) {
+        departmentList.innerHTML = '<tr><td colspan="3">No departments found.</td></tr>';
+        return;
+      }
+
+      departmentList.innerHTML = departments.map(createDepartmentRow).join('');
+    }
+
+    // Initialize the department list on page load
+    document.addEventListener('DOMContentLoaded', populateDepartmentList);
+  </script>
+</body>
+</html>
