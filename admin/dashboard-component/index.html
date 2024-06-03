@@ -39,9 +39,9 @@
 
            
             </li>
-                <li><a href="#">
+                <li><a href="reportComments.html">
                     <i class="uil uil-chart"></i>
-                    <span class="link-name">Analytics</span>
+                    <span class="link-name">Report</span>
                 </a></li>
                 <li><a href="insitutition.html">
                     <i class="uil uil-thumbs-up"></i>
@@ -51,6 +51,12 @@
                     <i class="uil uil-comments"></i>
                     <span class="link-name">Department</span>
                 </a></li>
+                <li><a href="comments.html">
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Comments</span>
+                </a></li>
+
+
             </ul>
             
             <ul class="logout-mode">
@@ -198,7 +204,7 @@
                     <div class="box box1">
                         <i class="uil uil-users-alt"></i>
                         <span class="text">Total Users</span>
-                        <span class="number" id="totalUsers">Loading....</span>
+                        <span class="number" id="totalUser">Loading....</span>
                     </div>
 
                     <script>
@@ -209,7 +215,7 @@
                                     throw new Error('Network response was not ok');
                                 }
                                 const data = await response.json();
-                                return data.total_users;
+                                return data.total_user;
                             } catch (error) {
                                 console.error('Error fetching total users:', error);
                                 return 'Error';
@@ -217,9 +223,9 @@
                         }
                 
                         async function displayTotalUsers() {
-                            const totalUsersElement = document.getElementById('totalUsers');
-                            const totalUsers = await fetchTotalUsers();
-                            totalUsersElement.textContent = totalUsers;
+                            const totalUsersElement = document.getElementById('totalUser');
+                            const totalUser = await fetchTotalUsers();
+                            totalUsersElement.textContent = totalUser;
                         }
                 
                         // Call the function to display total users when the page loads

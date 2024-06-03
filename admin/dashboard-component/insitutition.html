@@ -40,9 +40,9 @@
 
            
             </li>
-                <li><a href="#">
+                <li><a href="reportComments.html">
                     <i class="uil uil-chart"></i>
-                    <span class="link-name">Analytics</span>
+                    <span class="link-name">Report</span>
                 </a></li>
                 <li><a href="insitutition.html">
                     <i class="uil uil-thumbs-up"></i>
@@ -52,6 +52,10 @@
                     <i class="uil uil-comments"></i>
                     <span class="link-name">Department</span>
                 </a></li>
+                <li><a href="comments.html">
+                  <i class="uil uil-comments"></i>
+                  <span class="link-name">Comments</span>
+              </a></li>
               
             </ul>
             
@@ -103,41 +107,85 @@
                                 <div class="col-lg-4">
                                     
                                     </div>
-                                <div class="col-lg-8">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">First Name</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" value="John Doe">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">Last Name</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" value="John Doe">
-                                                </div>
-                                            </div>
-                                           
-                                      
-                                            
-                                            </div>
-                                            
-                                            </div>
-                                           
-                                             
-                                            <div class="row">
-                                                <div class="col-sm-3"></div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <input type="button" class="btn btn-primary px-4" value="Save Changes">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                
+                                    Copy code<div class="col-lg-8">
+                                      <div class="card">
+                                          <div class="card-body">
+                                              <div class="row mb-3">
+                                                  <div class="col-sm-3">
+                                                      <h6 class="mb-0">Name</h6>
+                                                  </div>
+                                                  <div class="col-sm-9 text-secondary">
+                                                      <input type="text" id="institutionName" class="form-control" value="">
+                                                  </div>
+                                              </div>
+                                              <div class="row mb-3">
+                                                  <div class="col-sm-3">
+                                                      <h6 class="mb-0">Type</h6>
+                                                  </div>
+                                                  <div class="col-sm-9 text-secondary">
+                                                      <input type="text" id="institutionType" class="form-control" value="">
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-sm-3"></div>
+                                                  <div class="col-sm-9 text-secondary">
+                                                      <input type="button" class="btn btn-primary px-4" value="Add Institution" onclick="addInstitution()">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  
+                                  <script>
+                                      async function addInstitution() {
+                                          const institutionName = document.getElementById('institutionName').value;
+                                          const institutionType = document.getElementById('institutionType').value;
+                                  
+                                          if (!institutionName || !institutionType) {
+                                              alert('Please enter both institution name and type.');
+                                              return;
+                                          }
+                                  
+                                          const institution = {
+                                              name: institutionName,
+                                              type: institutionType
+                                          };
+                                  
+                                          try {
+                                              const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/institution/add_institution/', {
+                                                  method: 'POST',
+                                                  headers: {
+                                                      'Content-Type': 'application/json'
+                                                  },
+                                                  body: JSON.stringify(institution)
+                                              });
+                                  
+                                              if (!response.ok) {
+                                                  const errorText = await response.text();
+                                                  throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
+                                              }
+                                  
+                                              const contentType = response.headers.get('content-type');
+                                              if (contentType && contentType.includes('application/json')) {
+                                                  const data = await response.json();
+                                                  console.log('Institution added successfully:', data);
+                                                  alert('Institution added successfully!');
+                                                  // Clear the input fields
+                                                  document.getElementById('institutionName').value = '';
+                                                  document.getElementById('institutionType').value = '';
+                                              } else {
+                                                  console.error('Expected JSON response but received:', contentType);
+                                                  const errorText = await response.text();
+                                                  console.error('Response text:', errorText);
+                                              }
+                                  
+                                          } catch (error) {
+                                              console.error('Error:', error);
+                                              alert(`Failed to add institution: ${error.message}`);
+                                          }
+                                      }
+                                  </script>
                                     
                                         </div>
                                     </div>
@@ -183,52 +231,73 @@
 </div>
 
 <script>
-async function fetchDepartments() {
-try {
-const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/institution/all_institutions/');
-const data = await response.json();
-return data.institutions || [];
-} catch (error) {
-console.error("Error fetching departments:", error);
-return [];
-}
-}
-
-function createDepartmentRow(department) {
-return `
-<tr class="candidates-list">
-<td class="text-center">${department.name}</td>
-<td class="text-center">${department.type}</td>
-<td class="text-center">
-  <ul class="list-unstyled mb-0 d-flex justify-content-end">
-    <li><a href="#" class="text-primary" data-toggle="tooltip" title="View"><i class="far fa-eye"></i></a></li>
-    <li><a href="#" class="text-danger" data-toggle="tooltip" title="Delete" onclick="confirmDelete(${department.id})"><i class="far fa-trash-alt"></i></a></li>
-  </ul>
-</td>
-</tr>
-`;
-}
-
-async function populateDepartmentList() {
-const departmentList = document.getElementById('department-list');
-const departments = await fetchDepartments();
-
-if (!Array.isArray(departments)) {
-departmentList.innerHTML = '<tr><td colspan="3">Invalid response format from API.</td></tr>';
-return;
-}
-
-if (departments.length === 0) {
-departmentList.innerHTML = '<tr><td colspan="3">No departments found.</td></tr>';
-return;
-}
-
-departmentList.innerHTML = departments.map(createDepartmentRow).join('');
-}
-
-// Initialize the department list on page load
-document.addEventListener('DOMContentLoaded', populateDepartmentList);
-</script>
+  async function fetchDepartments() {
+    try {
+      const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/institution/all_institutions/');
+      const data = await response.json();
+      return data.institutions || [];
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+      return [];
+    }
+  }
+  
+  function createDepartmentRow(department) {
+    return `
+      <tr class="candidates-list">
+        <td class="text-center">${department.name}</td>
+        <td class="text-center">${department.type}</td>
+        <td class="text-center">
+          <ul class="list-unstyled mb-0 d-flex justify-content-end">
+            <li><a href="#" class="text-primary" data-toggle="tooltip" title="View"><i class="far fa-eye"></i></a></li>
+            <li><a href="#" class="text-danger" data-toggle="tooltip" title="Delete" onclick="confirmDelete(${department.id})"><i class="far fa-trash-alt"></i></a></li>
+          </ul>
+        </td>
+      </tr>
+    `;
+  }
+  
+  async function populateDepartmentList() {
+    const departmentList = document.getElementById('department-list');
+    const departments = await fetchDepartments();
+  
+    if (!Array.isArray(departments)) {
+      departmentList.innerHTML = '<tr><td colspan="3">Invalid response format from API.</td></tr>';
+      return;
+    }
+  
+    if (departments.length === 0) {
+      departmentList.innerHTML = '<tr><td colspan="3">No departments found.</td></tr>';
+      return;
+    }
+  
+    departmentList.innerHTML = departments.map(createDepartmentRow).join('');
+  }
+  
+  async function confirmDelete(departmentId) {
+    if (confirm('Are you sure you want to delete this institution?')) {
+      try {
+        const response = await fetch(`https://policy-link-rwanda-client-project-with.onrender.com/institution/delete_institution/${departmentId}/`, {
+          method: 'DELETE',
+        });
+  
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Network response was not ok: ${response.status} - ${errorText}`);
+        }
+  
+        // Refresh the department list after successful deletion
+        populateDepartmentList();
+      } catch (error) {
+        console.error('Error deleting institution:', error);
+        alert(`Failed to delete institution: ${error.message}`);
+      }
+    }
+  }
+  
+  // Initialize the department list on page load
+  document.addEventListener('DOMContentLoaded', populateDepartmentList);
+  </script>
 
       <div class="text-center mt-3 mt-sm-3">
         <ul class="pagination justify-content-center mb-0">

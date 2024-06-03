@@ -33,14 +33,14 @@
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Dahsboard</span>
                 </a></li>
-                <li><a href="#">
+                <li><a href="userList.html">
                     <i class="uil uil-users-alt"></i>
                     <span class="link-name">Users</span>
                 </a>
 
            
             </li>
-                <li><a href="#">
+                <li><a href="reportComments.html">
                     <i class="uil uil-chart"></i>
                     <span class="link-name">Analytics</span>
                 </a></li>
@@ -51,6 +51,10 @@
                 <li><a href="department.html">
                     <i class="uil uil-comments"></i>
                     <span class="link-name">Department</span>
+                </a></li>
+                <li><a href="comments.html">
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Comments</span>
                 </a></li>
               
             </ul>
@@ -200,21 +204,17 @@
   <div class="col-md-12">
     <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
         <div class="container mt-3">
-            <h3>Comments</h3>
+            <h3>Comment Reports</h3>
             <table class="table manage-candidates-top mb-0">
                 <thead>
                     <tr>
                         <th class="text-center">ID</th>
-                        <th class="text-center">User</th>
-                        <th class="text-center">Policy</th>
-                        <th class="text-center">Description</th>
-                        <th class="text-center">Created_at</th>
-                        <th class="text-center">Department</th>
-
+                        <th class="text-center">Comment</th>
+                        <th class="text-center">Reported By</th>
                         <th class="text-center">Action</th>
                     </tr>
                 </thead>
-                <tbody id="comment-list"></tbody>
+                <tbody id="policy-list"></tbody>
             </table>
         </div>
     </div>
@@ -225,80 +225,60 @@
 </div>
 
 <script>
-async function fetchComments() {
-try {
-const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/institution/view_all_comments/');
-const data = await response.json();
-return data.comments || [];
-} catch (error) {
-console.error("Error fetching comments:", error);
-return [];
-}
-}
-
-async function deleteComment(commentId) {
-try {
-const response = await fetch(`https://policy-link-rwanda-client-project-with.onrender.com/institution/view_all_comments/delete_comment/${commentId}/`, {
-method: 'DELETE',
-});
-if (!response.ok) {
-throw new Error('Network response was not ok');
-}
-alert('Comment deleted successfully');
-populateCommentList();
-return true;
-} catch (error) {
-console.error("Error deleting comment:", error);
-alert('Failed to delete comment. Please try again.');
-return false;
-}
-}
-
-function createCommentRow(comment) {
-return `
-<tr class="candidates-list">
-<td class="text-center">${comment.id}</td>
-<td class="text-center">${comment.user}</td>
-<td class="text-center">${comment.policy}</td>
-<td class="text-center">${comment.description}</td>
-<td class="text-center">${comment.created_at}</td>
-<td class="text-center">${comment.department}</td>
-<td class="text-center">
-    <ul class="list-unstyled mb-0 d-flex justify-content-center">
-        <li><a href="#" class="text-info" data-toggle="tooltip" title="View"><i class="far fa-eye"></i></a></li>
-        <li><a href="#" class="text-danger" data-toggle="tooltip" title="Delete" onclick="confirmDelete(${comment.id})"><i class="far fa-trash-alt"></i></a></li>
-    </ul>
-</td>
-</tr>
-`;
-}
-
-async function populateCommentList() {
-const commentList = document.getElementById('comment-list');
-const comments = await fetchComments();
-
-if (!Array.isArray(comments)) {
-commentList.innerHTML = '<tr><td colspan="4">Invalid response format from API.</td></tr>';
-return;
-}
-
-if (comments.length === 0) {
-commentList.innerHTML = '<tr><td colspan="4">No comments found.</td></tr>';
-return;
-}
-
-commentList.innerHTML = comments.map(createCommentRow).join('');
-}
-
-function confirmDelete(commentId) {
-if (confirm('Are you sure you want to delete this comment?')) {
-deleteComment(commentId);
-}
-}
-
-// Initialize the comment list on page load
-document.addEventListener('DOMContentLoaded', populateCommentList);
-</script>
+    async function displayPolicies() {
+      try {
+        const response = await fetch('https://policy-link-rwanda-client-project-with.onrender.com/institution/view_all_policies/');
+        const data = await response.json();
+        return data.policies || [];
+      } catch (error) {
+        console.error("Error fetching policies:", error);
+        return [];
+      }
+    }
+    
+    function createPolicyRow(policy) {
+      return `
+        <tr class="candidates-list">
+          <td class="text-center">${policy.id}</td>
+          <td class="text-center">${policy.name}</td>
+          <td class="text-center">${policy.description}</td>
+          <td class="text-center">${policy.department}</td>
+          <td class="text-center">
+            <ul class="list-unstyled mb-0 d-flex justify-content-center">
+              <li><a href="#" class="text-info" data-toggle="tooltip" title="View"><i class="far fa-eye"></i></a></li>
+              <li><a href="#" class="text-danger" data-toggle="tooltip" title="Delete"><i class="far fa-trash-alt"></i></a></li>
+            </ul>
+          </td>
+        </tr>
+      `;
+    }
+    
+    async function populatePolicyList() {
+      const policyList = document.getElementById('policy-list');
+    
+      if (!policyList) {
+        console.error('Element with ID "policy-list" not found in the DOM.');
+        return;
+      }
+    
+      const policies = await displayPolicies();
+    
+      if (!Array.isArray(policies)) {
+        policyList.innerHTML = '<tr><td colspan="5">Invalid response format from API.</td></tr>';
+        return;
+      }
+    
+      if (policies.length === 0) {
+        policyList.innerHTML = '<tr><td colspan="5">No policies found.</td></tr>';
+        return;
+      }
+    
+      policyList.innerHTML = policies.map(createPolicyRow).join('');
+    }
+    
+    // Initialize the policy list on page load
+    document.addEventListener('DOMContentLoaded', populatePolicyList);
+    </script>
 
       <div class="text-center mt-3 mt-sm-3">
         <ul class="pagination justify-content-center mb-0">
