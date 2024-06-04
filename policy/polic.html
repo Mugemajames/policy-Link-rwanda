@@ -115,6 +115,8 @@
 
         async function fetchPolicies() {
             const departmentId = document.getElementById('departmentSelect').value;
+            const institutionName = document.getElementById('institutionSelect').selectedOptions[0].textContent;
+            const departmentName = document.getElementById('departmentSelect').selectedOptions[0].textContent;
             const policiesContainer = document.getElementById('policiesContainer');
             policiesContainer.innerHTML = ''; // Reset policies
 
@@ -132,21 +134,26 @@
                 if (contentType && contentType.includes('application/json')) {
                     const data = await response.json();
                     if (data && data.policies) {
-                        data.policies.forEach(policy => {
-                            const policyCard = document.createElement('div');
-                            policyCard.className = 'col-md-4 policy-card';
+                        const policyCard = document.createElement('div');
+                        policyCard.className = 'card';
+                        policyCard.innerHTML = `
+                            <div class="card-body">
+                                <h5 class="card-title">${institutionName} - ${departmentName} Policies</h5>
+                                <div id="policyList"></div>
+                                <a href="https://policy-link-rwanda-client-project-with.onrender.com/institution/download_policies_pdf/${institutionName}/${departmentName}/" class="btn btn-primary mt-3" download>Download All Policies as PDF</a>
+                            </div>
+                        `;
+                        policiesContainer.appendChild(policyCard);
 
-                            policyCard.innerHTML = `
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${policy.name}</h5>
-                                        <p class="card-text">${policy.description}</p>
-                                       
-                                    </div>
-                                    <a href="${policy.file_url}" class="btn btn-primary" download>Download</a>
-                                </div>
+                        const policyList = document.getElementById('policyList');
+                        data.policies.forEach(policy => {
+                            const policyItem = document.createElement('div');
+                            policyItem.innerHTML = `
+                                <h6>${policy.name}</h6>
+                                <p>${policy.description}</p>
+                                <hr>
                             `;
-                            policiesContainer.appendChild(policyCard);
+                            policyList.appendChild(policyItem);
                         });
                         clearFeedback();
                     } else {
